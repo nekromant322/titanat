@@ -17,4 +17,12 @@ public class WriteUtils {
             ImageIO.write(images.get(i), "jpg", outputFile);
         }
     }
+
+    @SneakyThrows
+    public static void writeImgToFile(BufferedImage image, String fileName) {
+        File outputFile = new File(fileName + ".jpg");
+        ImageIO.write(image, "jpg", outputFile);
+    }
+
+
 }

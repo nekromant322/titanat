@@ -13,9 +13,9 @@ public class Splitter {
 
     @SneakyThrows
     public static void main(String[] args) {
-        BufferedImage image = ImageToPixels.getImage("C:\\Users\\ПК\\IdeaProjects\\titanat\\src\\main\\resources\\photo_2023-03-13_19-43-29.jpg");
-        List<BufferedImage> split = split(image, 3, 3);
-        WriteUtils.writeFiles(split);
+//        BufferedImage image = ImageToPixels.getImage("C:\\Users\\ПК\\IdeaProjects\\titanat\\src\\main\\resources\\photo_2023-03-13_19-43-29.jpg");
+//        List<BufferedImage> split = split(image, 3, 3);
+//        WriteUtils.writeFiles(split);
     }
 
     @SneakyThrows
@@ -26,39 +26,67 @@ public class Splitter {
 //        BufferedImage imgs[] = new BufferedImage[rows * columns];
 
         // Equally dividing original image into subimages
-        int subimage_Width = image.getWidth() / columns;
-        int subimage_Height = image.getHeight() / rows;
+        int subimageWidth = image.getWidth() / columns;
+        int subimageHeight = image.getHeight() / rows;
 
-        int current_img = 0;
+        int currentImg = 0;
 
         // iterating over rows and columns for each sub-image
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 // Creating sub image
-//                imgs[current_img] = new BufferedImage(subimage_Width, subimage_Height, image.getType());
-                list.add(new BufferedImage(subimage_Width, subimage_Height, image.getType()));
-                Graphics2D img_creator = list.get(current_img).createGraphics();
+//                imgs[currentImg] = new BufferedImage(subimageWidth, subimageHeight, image.getType());
+                list.add(new BufferedImage(subimageWidth, subimageHeight, image.getType()));
+                Graphics2D imgCreator = list.get(currentImg).createGraphics();
 
                 // coordinates of source image
-                int src_first_x = subimage_Width * j;
-                int src_first_y = subimage_Height * i;
+                int srcFirstX = subimageWidth * j;
+                int srcFirstY = subimageHeight * i;
 
                 // coordinates of sub-image
-                int dst_corner_x = subimage_Width * j + subimage_Width;
-                int dst_corner_y = subimage_Height * i + subimage_Height;
+                int dstCornerX = subimageWidth * j + subimageWidth;
+                int dstCornerY = subimageHeight * i + subimageHeight;
 
-                img_creator.drawImage(image, 0, 0, subimage_Width, subimage_Height, src_first_x, src_first_y, dst_corner_x, dst_corner_y, null);
-                current_img++;
+                imgCreator.drawImage(image, 0, 0, subimageWidth, subimageHeight, srcFirstX, srcFirstY, dstCornerX, dstCornerY, null);
+                currentImg++;
+            }
+        }
+        return list;
+
+    }
+
+    public static BufferedImage compose(List<BufferedImage> bufferedImages, BufferedImage originalImage, int rows, int columns) {
+        BufferedImage composedImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), originalImage.getType());
+        Graphics2D imgCreator = composedImage.createGraphics();
+
+
+//        imgCreator.drawImage(peace, 0, 0, peace.getWidth(), peace.getHeight(), 0, 0, peace.getWidth(), peace.getHeight(), null);
+//426
+//299
+        //todo пофиксить математику
+        int i = 0;
+        int j = 0;
+        for (int k = 0; k < bufferedImages.size(); k++) {
+            int subimageWidth = bufferedImages.get(k).getWidth();
+            int subimageHeight = bufferedImages.get(k).getHeight();
+            // coordinates of source image
+            int srcFirstX = subimageWidth * j;
+            int srcFirstY = subimageHeight * i;
+
+            // coordinates of sub-image
+            int dstCornerX = subimageWidth * j + subimageWidth;
+            int dstCornerY = subimageHeight * i + subimageHeight;
+//            imgCreator.drawImage(composedImage, 0, 0, subimageWidth, subimageHeight, srcFirstX, srcFirstY, dstCornerX, dstCornerY, null);
+//            imgCreator.drawImage(bufferedImages.get(k), 0, 0, subimageWidth, subimageHeight, srcFirstX, srcFirstY, srcFirstX + subimageWidth, srcFirstY + subimageHeight, null);
+            imgCreator.drawImage(bufferedImages.get(k),  srcFirstX, srcFirstY, srcFirstX + subimageWidth, srcFirstY + subimageHeight,0, 0, subimageWidth, subimageHeight, null);
+            i++;
+            if (i == columns) {
+                j++;
+                i = 0;
             }
         }
 
-//        //writing sub-images into image files
-//        for (int i = 0; i < rows * columns; i++) {
-//            File outputFile = new File("img" + i + ".jpg");
-//            ImageIO.write(list.get(i), "jpg", outputFile);
-//        }
-        System.out.println("Sub-images have been created.");
-        return list;
 
+        return composedImage;
     }
 }
