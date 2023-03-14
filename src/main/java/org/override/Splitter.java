@@ -2,21 +2,13 @@ package org.override;
 
 import lombok.SneakyThrows;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Splitter {
 
-    @SneakyThrows
-    public static void main(String[] args) {
-//        BufferedImage image = ImageToPixels.getImage("C:\\Users\\ПК\\IdeaProjects\\titanat\\src\\main\\resources\\photo_2023-03-13_19-43-29.jpg");
-//        List<BufferedImage> split = split(image, 3, 3);
-//        WriteUtils.writeFiles(split);
-    }
 
     @SneakyThrows
     public static List<BufferedImage> split(BufferedImage image, int rows, int columns) {
@@ -27,12 +19,10 @@ public class Splitter {
         int subimageHeight = image.getHeight() / rows;
 
         int currentImg = 0;
-
         // iterating over rows and columns for each sub-image
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 // Creating sub image
-//                imgs[currentImg] = new BufferedImage(subimageWidth, subimageHeight, image.getType());
                 list.add(new BufferedImage(subimageWidth, subimageHeight, image.getType()));
                 Graphics2D imgCreator = list.get(currentImg).createGraphics();
 

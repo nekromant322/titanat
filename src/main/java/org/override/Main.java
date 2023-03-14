@@ -1,16 +1,11 @@
 package org.override;
 
+import filters.EmbossFilter;
 import lombok.SneakyThrows;
-
-import javax.imageio.ImageIO;
-import javax.imageio.stream.FileImageInputStream;
-import javax.imageio.stream.ImageInputStream;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
-import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,9 +24,9 @@ public class Main {
 
         BufferedImage image = ImageToPixels.getImage("C:\\Users\\ПК\\IdeaProjects\\titanat\\src\\main\\resources\\photo_2023-03-13_19-43-29.jpg");
 
-        image = Filter.emboss(image);
-        int rows = 3;
-        int columns = 3;
+        image = new EmbossFilter().filter(image);
+        int rows = 32;
+        int columns = 18;
         List<BufferedImage> splited = Splitter.split(image, rows, columns);
         List<BufferedImage> normalizedSplited = new ArrayList<>();
 
@@ -40,9 +35,11 @@ public class Main {
             BufferedImage normalized = normalize(img, range);
             normalizedSplited.add(normalized);
         }
+        BufferedImage composedImage = Splitter.compose(normalizedSplited, image, rows, columns);
+
 
         WriteUtils.writeFiles(normalizedSplited);
-        WriteUtils.writeImgToFile(Splitter.compose(normalizedSplited, image, rows, columns), "composed");
+        WriteUtils.writeImgToFile(composedImage, "composed");
 //        Range range = calculateDominatingGreyScaleRange(image, GREY_SCALE_SEARCH_RANGE);
 //
 //        BufferedImage normalized = normalize(image, range);

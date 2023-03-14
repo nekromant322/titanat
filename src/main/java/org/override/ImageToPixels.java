@@ -19,26 +19,6 @@ public class ImageToPixels {
     public static final String IMAGE_ALLOW_TYPES = "Image types allowed - " + IMAGE_EXT_JPG + IMAGE_EXT_JPEG
             + IMAGE_EXT_PNG + IMAGE_EXT_GIF;
 
-    /**
-     * @param args
-     */
-    public static void main(String[] args) {
-        /**
-         * Read the image, Desert.jpg, from Desktop/Pictures
-         */
-        BufferedImage bufferedImage = getImage("Chrysanthemum.jpg");
-
-        /**
-         * Get pixels from the above image and display in the console
-         */
-        int[][] pixels = getImageToPixels(bufferedImage);
-        for (int i = 0; i < pixels.length; i++) {
-            for (int j = 0; j < pixels[0].length; j++) {
-                System.out.print(pixels[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
 
     /**
      * Read image and return BufferedImage imageFullPath - full path of the image
@@ -124,7 +104,7 @@ public class ImageToPixels {
         }
         return "";
     }
-    static BufferedImage deepCopy(BufferedImage bi) {
+    public static BufferedImage deepCopy(BufferedImage bi) {
         ColorModel cm = bi.getColorModel();
         boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
         WritableRaster raster = bi.copyData(null);
