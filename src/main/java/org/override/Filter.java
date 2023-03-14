@@ -32,12 +32,9 @@ public class Filter {
     public static BufferedImage emboss(BufferedImage image) {
         Kernel kernel = new Kernel(3, 3,
                 new float[]{
-
-                        -1, 0, 0,
-
+                        -2, 0, -1,
                         0, 1, 0,
-
-                        0, 0, 2});
+                        1, 0, 2});
 
         BufferedImageOp op = new ConvolveOp(kernel);
         BufferedImage embossedBufferedImage = ImageToPixels.deepCopy(image);

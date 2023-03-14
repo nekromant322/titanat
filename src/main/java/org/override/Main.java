@@ -10,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,8 +27,9 @@ public class Main {
     @SneakyThrows
     public static void main(String[] args) {
 
-        BufferedImage image = ImageToPixels.getImage("C:\\Users\\ПК\\IdeaProjects\\titanat\\src\\main\\resources\\emboss2.jpg");
+        BufferedImage image = ImageToPixels.getImage("C:\\Users\\ПК\\IdeaProjects\\titanat\\src\\main\\resources\\photo_2023-03-13_19-43-29.jpg");
 
+        image = Filter.emboss(image);
         int rows = 3;
         int columns = 3;
         List<BufferedImage> splited = Splitter.split(image, rows, columns);

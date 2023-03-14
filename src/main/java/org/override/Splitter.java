@@ -22,9 +22,6 @@ public class Splitter {
     public static List<BufferedImage> split(BufferedImage image, int rows, int columns) {
         List<BufferedImage> list = new ArrayList<>();
 
-        // initializing array to hold subimages
-//        BufferedImage imgs[] = new BufferedImage[rows * columns];
-
         // Equally dividing original image into subimages
         int subimageWidth = image.getWidth() / columns;
         int subimageHeight = image.getHeight() / rows;
@@ -59,25 +56,14 @@ public class Splitter {
         BufferedImage composedImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), originalImage.getType());
         Graphics2D imgCreator = composedImage.createGraphics();
 
-
-//        imgCreator.drawImage(peace, 0, 0, peace.getWidth(), peace.getHeight(), 0, 0, peace.getWidth(), peace.getHeight(), null);
-//426
-//299
-        //todo пофиксить математику
         int i = 0;
         int j = 0;
         for (int k = 0; k < bufferedImages.size(); k++) {
             int subimageWidth = bufferedImages.get(k).getWidth();
             int subimageHeight = bufferedImages.get(k).getHeight();
-            // coordinates of source image
-            int srcFirstX = subimageWidth * j;
-            int srcFirstY = subimageHeight * i;
+            int srcFirstX = subimageWidth * i;
+            int srcFirstY = subimageHeight * j;
 
-            // coordinates of sub-image
-            int dstCornerX = subimageWidth * j + subimageWidth;
-            int dstCornerY = subimageHeight * i + subimageHeight;
-//            imgCreator.drawImage(composedImage, 0, 0, subimageWidth, subimageHeight, srcFirstX, srcFirstY, dstCornerX, dstCornerY, null);
-//            imgCreator.drawImage(bufferedImages.get(k), 0, 0, subimageWidth, subimageHeight, srcFirstX, srcFirstY, srcFirstX + subimageWidth, srcFirstY + subimageHeight, null);
             imgCreator.drawImage(bufferedImages.get(k),  srcFirstX, srcFirstY, srcFirstX + subimageWidth, srcFirstY + subimageHeight,0, 0, subimageWidth, subimageHeight, null);
             i++;
             if (i == columns) {
