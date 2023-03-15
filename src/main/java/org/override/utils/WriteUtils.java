@@ -1,4 +1,4 @@
-package org.override;
+package org.override.utils;
 
 import lombok.SneakyThrows;
 
@@ -18,11 +18,7 @@ public class WriteUtils {
         }
     }
 
-    @SneakyThrows
-    public static void writeImgToFile(BufferedImage image, String fileName) {
-        File outputFile = new File("src/main/resources/" +fileName + ".jpg");
-        ImageIO.write(image, "jpg", outputFile);
-    }
+
 
 
 }

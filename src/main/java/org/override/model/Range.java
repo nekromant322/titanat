@@ -1,4 +1,4 @@
-package org.override;
+package org.override.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

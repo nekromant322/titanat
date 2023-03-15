@@ -1,4 +1,4 @@
-package org.override;
+package org.override.service;
 
 import lombok.SneakyThrows;
 
@@ -7,11 +7,11 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Splitter {
+public class SplitterService {
 
 
     @SneakyThrows
-    public static List<BufferedImage> split(BufferedImage image, int rows, int columns) {
+    public List<BufferedImage> split(BufferedImage image, int rows, int columns) {
         List<BufferedImage> list = new ArrayList<>();
 
         // Equally dividing original image into subimages
@@ -42,7 +42,7 @@ public class Splitter {
 
     }
 
-    public static BufferedImage compose(List<BufferedImage> bufferedImages, BufferedImage originalImage, int rows, int columns) {
+    public BufferedImage compose(List<BufferedImage> bufferedImages, BufferedImage originalImage, int rows, int columns) {
         BufferedImage composedImage = new BufferedImage(originalImage.getWidth(), originalImage.getHeight(), originalImage.getType());
         Graphics2D imgCreator = composedImage.createGraphics();
 

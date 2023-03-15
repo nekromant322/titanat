@@ -1,4 +1,6 @@
-package org.override;
+package org.override.utils;
+
+import lombok.SneakyThrows;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -7,12 +9,17 @@ import java.awt.image.ImagingOpException;
 import java.awt.image.WritableRaster;
 import java.io.File;
 
-public class ImageToPixels {
+public class ImageUtils {
 
     private static final String IMAGE_EXT_JPG = "jpg";
     private static final String IMAGE_EXT_JPEG = "jpeg";
     private static final String IMAGE_EXT_PNG = "png";
     private static final String IMAGE_EXT_GIF = "gif";
+
+    public static final double RED_SCALE = 0.299;
+    public static final double GREEN_SCALE = 0.587;
+    public static final double BLUE_SCALE = 0.114;
+
     /**
      * Exception message to be thrown when allowed image types are not read
      */
@@ -109,6 +116,21 @@ public class ImageToPixels {
         boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
         WritableRaster raster = bi.copyData(null);
         return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
+    }
+
+    public static double getGreyScale(BufferedImage image, int x, int y) {
+        WritableRaster raster = image.getRaster();
+        Object dataElements = raster.getDataElements(x, y, null);
+        ColorModel colorModel = image.getColorModel();
+        return RED_SCALE * colorModel.getRed(dataElements) +
+                GREEN_SCALE * colorModel.getGreen(dataElements) +
+                BLUE_SCALE * colorModel.getBlue(dataElements);
+    }
+
+    @SneakyThrows
+    public static void writeImgToFile(BufferedImage image, String fileName) {
+        File outputFile = new File("src/main/resources/" +fileName + ".jpg");
+        ImageIO.write(image, "jpg", outputFile);
     }
 
 }
